@@ -141,7 +141,7 @@ void ofApp::draw(){
     
     // Animate string mesh
     ofPushStyle();
-    ofSetColor(0,100,255);
+    ofSetColor(0,0,255);
     ofMesh stringMesh = font.getStringMesh(slogan, fontX, fontY);
     for(int i = 0; i < stringMesh.getNumVertices(); i++) {
         stringMesh.setVertex(i, stringMesh.getVertex(i) + ofVec3f(10*(0.5-ofRandomuf()),ofRandom(-30,30)*(0.3 - ofRandomf()), 100*(0.8 - ofRandomuf())));
@@ -151,7 +151,7 @@ void ofApp::draw(){
     ofPopStyle();
     
     ofPushStyle();
-    ofSetColor(0);
+    ofSetColor(255,0,0);
     
     font.drawString(slogan, fontX, fontY);
     ofPopStyle();
