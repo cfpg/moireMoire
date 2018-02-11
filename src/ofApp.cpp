@@ -89,7 +89,7 @@ void ofApp::draw(){
                 ofSetColor(0, 0, color, 255);
             }
             
-            int deg = (o / 360);
+            int deg = (o / 360) * ofRandomf();
             if (deg < 0) {
                 deg *= -1;
             }
@@ -112,11 +112,36 @@ void ofApp::draw(){
     fbo.draw(0,0);
     ofPopMatrix();
     
+    string slogan = "give me moiré";
+    int fontX = (ofGetWidth()/2) - (font.stringWidth(slogan)/2);
+    int fontY = 255;
+    
+    // Animate string mesh
+    ofPushStyle();
+    ofSetColor(0,0,255);
+    ofMesh stringMesh = font.getStringMesh(slogan, fontX, fontY);
+    for(int i = 0; i < stringMesh.getNumVertices(); i++) {
+        stringMesh.setVertex(i, stringMesh.getVertex(i) + ofVec3f(10*(0.5-ofRandomuf()),ofRandom(-30,30)*(0.3 - ofRandomf()), 100*(0.3 - ofRandomf())));
+    }
+    
+    stringMesh.draw();
+    ofPopStyle();
+    
     ofPushStyle();
     ofSetColor(255,0,0);
-    string slogan = "give me moiré";
-    font.drawString(slogan, (ofGetWidth()/2) - (font.stringWidth(slogan)/2), 255);
+    
+    font.drawString(slogan, fontX, fontY);
     ofPopStyle();
     
 }
+
+
+
+
+
+
+
+
+
+
 
