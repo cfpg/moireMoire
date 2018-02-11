@@ -26,8 +26,6 @@ class ofApp : public ofBaseApp{
     
     int color;
     float speed = 0.1;
-    int currentZ = 1;
-    bool goingFront = true;
     
     float midPointX = 1.0;
     float midPointY = 1.0;

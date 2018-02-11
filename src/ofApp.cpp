@@ -48,9 +48,6 @@ void ofApp::draw(){
         color = 0;
     }
     
-    // Animate Z
-    currentZ += currentZ * (2/speed);
-    
     int totalX = ofGetWidth();
     int totalY = ofGetHeight();
     
@@ -82,11 +79,6 @@ void ofApp::draw(){
                 o = o * -1;
             }
             
-//            ofLogNotice("got opacity: " + ofToString(o) + "; x: " + ofToString(x) + "; half: " + ofToString(halfWidth) + "; fi: " + ofToString(farAway / halfWidth) );
-            
-            
-//            ofLogNotice("Current: " + ofToString(j) + "; x: " + ofToString(i));
-            
             int targ = y;//(x + y);
             
             if (targ % 3 == 0) {
@@ -117,7 +109,6 @@ void ofApp::draw(){
     fbo.end();
     
     ofPushMatrix();
-//    ofTranslate(100,100);
     fbo.draw(0,0);
     ofPopMatrix();
     
@@ -127,60 +118,5 @@ void ofApp::draw(){
     font.drawString(slogan, (ofGetWidth()/2) - (font.stringWidth(slogan)/2), 255);
     ofPopStyle();
     
-//    std::exit(0);
 }
 
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
-}
