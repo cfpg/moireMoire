@@ -5,7 +5,7 @@ void ofApp::setup(){
     font.load(fontFile, fontSize);
     
     ofBackground(255, 255, 255);
-    fbo.allocate(640, 480, GL_RGBA);
+    fbo.allocate(640, 480, GL_RGB);
     fbo.begin();
     ofClear(255,255,255, 0);
     fbo.end();
@@ -36,7 +36,7 @@ void ofApp::draw(){
     fbo.begin();
     
     ofClear(255,255,255,0);
-//    mesh.clear();
+    mesh.clear();
     
     int halfWidth = ofGetWidth() / 2;
     int halfHeight = ofGetHeight() / 2;
@@ -51,7 +51,7 @@ void ofApp::draw(){
     
     int totalX = ofGetWidth();
     int totalY = ofGetHeight();
-    totalY = 300;
+//    totalY = 300;
     
     for (int x = 0; x < totalX; x++) {
         float currentLine = 0.0;
