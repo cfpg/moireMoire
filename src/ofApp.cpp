@@ -3,12 +3,27 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
+    posX.reset((ofGetWidth()/2) * -1);
+    posX.setRepeatType(LOOP_BACK_AND_FORTH);
+    posX.setCurve(SWIFT_GOOGLE);
+    posX.animateTo((float)ofGetWidth()/2);
+    
+    posY.reset((ofGetHeight()/2) * -1);
+    posY.setRepeatType(LOOP_BACK_AND_FORTH);
+    posY.setCurve(SWIFT_GOOGLE);
+    posY.animateTo((float)ofGetHeight()/2);
+    
+    degAnim.reset(1);
+    degAnim.setRepeatType(LOOP_BACK_AND_FORTH);
+    degAnim.setCurve(SWIFT_GOOGLE);
+    degAnim.animateTo(360.0f);
+    
     font.load(fontFile, fontSize);
     
-    ofBackground(255, 255, 255);
-    fbo.allocate(640, 480, GL_RGBA);
+    ofBackground(255);
+    fbo.allocate(640, 480, GL_RGB);
     fbo.begin();
-    ofClear(255,255,255, 0);
+    ofClear(255,255,255);
     fbo.end();
     
     color = 0;
@@ -16,6 +31,10 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    posX.update(1.0f/60.0f);
+    posY.update(1.0f/60.0f);
+    degAnim.update(1.0f/120.0f);
+    
     if (color > 255) {
         color = 0;
     }
@@ -35,7 +54,7 @@ void ofApp::update(){
 void ofApp::draw(){
     fbo.begin();
     
-    ofClear(255,255,255,0);
+    ofClear(255,255,255);
     
     int halfWidth = ofGetWidth() / 2;
     int halfHeight = ofGetHeight() / 2;
@@ -50,6 +69,8 @@ void ofApp::draw(){
     
     int totalX = ofGetWidth();
     int totalY = ofGetHeight();
+    totalX = 300;
+    totalY = 300;
     
     for (int x = 0; x < totalX; x++) {
         float currentLine = 0.0;
@@ -82,14 +103,15 @@ void ofApp::draw(){
             int targ = y;//(x + y);
             
             if (targ % 3 == 0) {
-                ofSetColor(color, 0, 0, 255);
+                ofSetColor(color, 0, 0);
             } else if (targ % 2 == 0) {
-                ofSetColor(0, color, 0, 255);
+                ofSetColor(0, color, 0);
             } else {
-                ofSetColor(0, 0, color, 255);
+                ofSetColor(0, 0, color);
             }
+            ofSetColor(0);
             
-            int deg = (o / 360) * ofRandomf();
+            int deg = (o / 360) * ofRandomuf();
             if (deg < 0) {
                 deg *= -1;
             }
@@ -97,8 +119,9 @@ void ofApp::draw(){
             
             ofPushMatrix();
             
-            ofRotate(deg + x + (y));
-            ofDrawCircle(x, y, 0, 1);
+            ofRotate(x+ (y*degAnim.getCurrentValue()));
+            ofTranslate(-100, x+y);
+            ofDrawCircle(posX.getCurrentValue(), (float)y - posY.getCurrentValue(), 0, 1);
             
             ofPopMatrix();
             
@@ -114,21 +137,21 @@ void ofApp::draw(){
     
     string slogan = "give me moiré";
     int fontX = (ofGetWidth()/2) - (font.stringWidth(slogan)/2);
-    int fontY = 255;
+    int fontY = 250;
     
     // Animate string mesh
     ofPushStyle();
-    ofSetColor(0,0,255);
+    ofSetColor(0,100,255);
     ofMesh stringMesh = font.getStringMesh(slogan, fontX, fontY);
     for(int i = 0; i < stringMesh.getNumVertices(); i++) {
-        stringMesh.setVertex(i, stringMesh.getVertex(i) + ofVec3f(10*(0.5-ofRandomuf()),ofRandom(-30,30)*(0.3 - ofRandomf()), 100*(0.3 - ofRandomf())));
+        stringMesh.setVertex(i, stringMesh.getVertex(i) + ofVec3f(10*(0.5-ofRandomuf()),ofRandom(-30,30)*(0.3 - ofRandomf()), 100*(0.8 - ofRandomuf())));
     }
-    
+
     stringMesh.draw();
     ofPopStyle();
     
     ofPushStyle();
-    ofSetColor(255,0,0);
+    ofSetColor(0);
     
     font.drawString(slogan, fontX, fontY);
     ofPopStyle();

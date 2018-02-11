@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "math.h"
+#include "ofxAnimatableFloat.h"
 
 class ofApp : public ofBaseApp{
 
@@ -11,6 +12,9 @@ class ofApp : public ofBaseApp{
 		void draw();
     
     ofFbo fbo;
+    ofxAnimatableFloat posX;
+    ofxAnimatableFloat posY;
+    ofxAnimatableFloat degAnim;
     
     int color;
     float speed = 0.1;
