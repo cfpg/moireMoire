@@ -2,7 +2,6 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    
     font.load(fontFile, fontSize);
     
     ofBackground(255, 255, 255);
@@ -33,9 +32,11 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    
     fbo.begin();
     
     ofClear(255,255,255,0);
+//    mesh.clear();
     
     int halfWidth = ofGetWidth() / 2;
     int halfHeight = ofGetHeight() / 2;
@@ -50,6 +51,7 @@ void ofApp::draw(){
     
     int totalX = ofGetWidth();
     int totalY = ofGetHeight();
+    totalY = 300;
     
     for (int x = 0; x < totalX; x++) {
         float currentLine = 0.0;
@@ -81,14 +83,6 @@ void ofApp::draw(){
             
             int targ = y;//(x + y);
             
-            if (targ % 3 == 0) {
-                ofSetColor(color, 0, 0, 255);
-            } else if (targ % 2 == 0) {
-                ofSetColor(0, color, 0, 255);
-            } else {
-                ofSetColor(0, 0, color, 255);
-            }
-            
             int deg = (o / 360) * ofRandomf();
             if (deg < 0) {
                 deg *= -1;
@@ -98,7 +92,16 @@ void ofApp::draw(){
             ofPushMatrix();
             
             ofRotate(deg + x + (y));
-            ofDrawCircle(x, y, 0, 1);
+            
+            mesh.addVertex(ofPoint(x,y,deg*0.3)); // make a new vertex
+            
+            if (targ % 3 == 0) {
+                mesh.addColor(ofFloatColor(color,0,0));
+            } else if (targ % 2 == 0) {
+                mesh.addColor(ofFloatColor(0,color,0));
+            } else {
+                mesh.addColor(ofFloatColor(0,0,color));
+            }
             
             ofPopMatrix();
             
@@ -106,6 +109,19 @@ void ofApp::draw(){
         }
     }
     
+    for (int y = 0; y<totalY-1; y++){
+        for (int x=0; x<totalX-1; x++){
+            mesh.addIndex(x+y*totalX);               // 0
+            mesh.addIndex((x+1)+y*totalX);           // 1
+            mesh.addIndex(x+(y+1)*totalX);           // 10
+            
+            mesh.addIndex((x+1)+y*totalX);           // 1
+            mesh.addIndex((x+1)+(y+1)*totalX);       // 11
+            mesh.addIndex(x+(y+1)*totalX);           // 10
+        }
+    }
+    
+    mesh.draw();
     fbo.end();
     
     ofPushMatrix();

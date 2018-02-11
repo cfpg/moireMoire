@@ -11,6 +11,10 @@ class ofApp : public ofBaseApp{
 		void draw();
     
     ofFbo fbo;
+    ofMesh mesh;
+    
+    int totalX = ofGetWidth();
+    int totalY = ofGetHeight();
     
     int color;
     float speed = 0.1;
